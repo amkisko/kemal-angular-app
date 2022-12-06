@@ -1,0 +1,21 @@
+name: server
+version: 0.1.0
+
+authors:
+  - Andrei Makarov <andrei@kiskolabs.com>
+
+targets:
+  server:
+    main: src/server.cr
+
+crystal: 1.6.2
+
+license: MIT
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+  kemal-basic-auth:
+    github: kemalcr/kemal-basic-auth
+  spec-kemal:
+    github: kemalcr/spec-kemal
