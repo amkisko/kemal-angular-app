@@ -19,7 +19,7 @@ COPY . .
 
 WORKDIR /tmp/app/server
 RUN shards install
-RUN crystal build --static --release src/server.cr -o build/server
+RUN scripts/build
 
 WORKDIR /tmp/app/client
 RUN npm install
@@ -29,6 +29,6 @@ RUN npm run build
 FROM core as app
 
 COPY --from=build /app/server/build/server /app/server
-COPY --from=build /app/client/dist /app/public
+COPY --from=build /app/client/dist/client /app/public
 
-CMD ["/app/server"]
+CMD ["/app/server -b $HOST -p $PORT"]

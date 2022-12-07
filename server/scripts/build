@@ -1,0 +1,3 @@
+#!/bin/sh
+
+crystal build --static --release src/server.cr -o dist/server
