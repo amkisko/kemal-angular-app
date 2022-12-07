@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  client:
+    container_name: client
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: development
+    ports:
+      - 80:80
+    volumes:
+      - type: bind
+        source: ./client
+        target: /app/client
+    depends_on:
+      - server
+    command: sh -c "cd client; npm install && ./scripts/dev"
+
+  server:
+    container_name: server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    volumes:
+      - type: bind
+        source: ./server
+        target: /app/server
+    environment:
+      KEMAL_ENV: development
+      DATABASE_URL: postgresql://postgres:postgres@database:5432/app_development?user=postgres
+      REDIS_URL: redis://redis:6379
+      S3_ENDPOINT: http://s3:9000
+    links:
+      - redis
+      - database
+      - s3
+    command: sh -c "cd server; ./scripts/dev"
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+  database:
+    image: postgres:alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  s3:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: app_access_key
+      MINIO_SECRET_KEY: app_secret_key
+    command: server /data
+    volumes:
+      - minio_data:/data
+
+volumes:
+  db_data:
+  minio_data:

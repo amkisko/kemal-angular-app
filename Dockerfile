@@ -6,9 +6,10 @@ ENV KEMAL_ENV production
 
 RUN apk update && \
     apk add --no-cache \
-    git ca-certificates tzdata \
-    nodejs npm && \
+    git nodejs npm \
+    ca-certificates tzdata && \
     update-ca-certificates
+
 RUN crystal -v
 
 ## Build image
