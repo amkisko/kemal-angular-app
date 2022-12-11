@@ -1,3 +1,4 @@
 #!/bin/sh
 
+mkdir -p dist
 crystal build --static --release src/server.cr -o dist/server
