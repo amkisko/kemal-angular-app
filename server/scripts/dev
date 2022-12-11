@@ -1,3 +1,3 @@
 #!/bin/sh
 
-crystal run src/server.cr
+crystal run src/server.cr --bind 0.0.0.0 --port 3000

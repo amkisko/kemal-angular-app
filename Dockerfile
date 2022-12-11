@@ -17,12 +17,13 @@ RUN apk update && \
 FROM core as build
 
 WORKDIR /tmp/app
-COPY . .
 
+COPY server /tmp/app/server
 WORKDIR /tmp/app/server
 RUN scripts/setup
 RUN scripts/build
 
+COPY client /tmp/app/client
 WORKDIR /tmp/app/client
 RUN scripts/setup
 RUN scripts/build

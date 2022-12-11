@@ -9,11 +9,14 @@ services:
     environment:
       NODE_ENV: development
     ports:
-      - 80:80
+      - 4200:4200
+    stdin_open: true
+    tty: true
     volumes:
       - type: bind
         source: ./client
         target: /app/client
+      - client_build_cache:/app/client/node_modules
     depends_on:
       - server
     command: sh -c "cd /app/client; ./scripts/setup && ./scripts/dev"
@@ -29,6 +32,7 @@ services:
       - type: bind
         source: ./server
         target: /app/server
+      - server_build_cache:/app/server/lib
     environment:
       KEMAL_ENV: development
       DATABASE_URL: postgresql://postgres:postgres@database:5432/app_development?user=postgres
@@ -66,3 +70,5 @@ services:
 volumes:
   db_data:
   minio_data:
+  client_build_cache:
+  server_build_cache:
