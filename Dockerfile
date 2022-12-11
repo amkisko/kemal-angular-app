@@ -30,7 +30,7 @@ RUN scripts/build
 ## App image
 FROM core as app
 
-COPY --from=build /tmp/app/server/dist/server /app/server
-COPY --from=build /tmp/app/client/dist/client /app/public
+COPY --from=build /tmp/app/server/dist/server /app/dist/server
+COPY --from=build /tmp/app/client/dist/client /app/dist/public
 
-CMD ["/app/server -b $HOST -p $PORT"]
+CMD ["/app/bin/server -b $HOST -p $PORT"]

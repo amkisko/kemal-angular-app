@@ -16,7 +16,7 @@ services:
         target: /app/client
     depends_on:
       - server
-    command: sh -c "cd client; npm install && ./scripts/dev"
+    command: sh -c "cd /app/client; ./scripts/setup && ./scripts/dev"
 
   server:
     container_name: server
@@ -38,7 +38,7 @@ services:
       - redis
       - database
       - s3
-    command: sh -c "cd server; ./scripts/dev"
+    command: sh -c "cd /app/server; ./scripts/setup && ./scripts/dev"
 
   redis:
     image: redis:alpine

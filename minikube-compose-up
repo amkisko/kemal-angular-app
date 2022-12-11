@@ -1,0 +1,8 @@
+#!/bin/bash
+
+export CLUSTER_IP=`minikube ip`
+export CURRENT_PATH=`pwd`
+
+minikube mount $CURRENT_PATH:$CURRENT_PATH --ip "${CLUSTER_IP%.*}.1" &
+
+docker-compose up --build
